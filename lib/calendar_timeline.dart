@@ -282,8 +282,8 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
           alignment: _scrollAlignment,
           duration: Duration(milliseconds: 500),
           curve: Curves.easeIn,
-        )
-        .then((value) => widget.onDateSelected(_selectedDate));
+        );
+       widget.onDateSelected(_selectedDate);
   }
 
   _initCalendar() {
