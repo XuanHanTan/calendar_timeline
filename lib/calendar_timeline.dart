@@ -271,9 +271,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
     _daySelectedIndex = index;
     _selectedDate = _days[index];
     widget.onDateSelected(_selectedDate);
-    setState(() {
-      
-    });
+    
     _moveToDayIndex(index);
   }
 
