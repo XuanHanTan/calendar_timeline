@@ -6,6 +6,9 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 typedef OnDateSelected = Function(DateTime);
 DateTime _selectedDate;
+getCurrentSelectedDate(){
+    return _selectedDate;
+  }
 class CalendarTimeline extends StatefulWidget {
   final DateTime initialDate;
   final DateTime firstDate;
@@ -21,9 +24,7 @@ class CalendarTimeline extends StatefulWidget {
   final Color dayNameColor;
   final String locale;
   
-  getCurrentSelectedDate(){
-    return _selectedDate;
-  }
+  
 
   CalendarTimeline({
     Key key,
