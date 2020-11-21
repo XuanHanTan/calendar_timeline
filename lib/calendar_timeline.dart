@@ -20,6 +20,7 @@ class CalendarTimeline extends StatefulWidget {
   final Color dotsColor;
   final Color dayNameColor;
   final String locale;
+  final Color monthUnselectedColor;
 
   CalendarTimeline({
     Key key,
@@ -36,6 +37,7 @@ class CalendarTimeline extends StatefulWidget {
     this.dotsColor,
     this.dayNameColor,
     this.locale,
+    this.monthUnselectedColor,
   })  : assert(initialDate != null),
         assert(firstDate != null),
         assert(lastDate != null),
@@ -208,6 +210,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
                   name: monthName,
                   onTap: () => _goToActualMonth(index),
                   color: widget.monthColor,
+                  unselectedColor: widget.monthUnselectedColor,
                 ),
                 if (index == _months.length - 1)
                   SizedBox(
@@ -308,8 +311,9 @@ class MonthName extends StatelessWidget {
   final Function onTap;
   final bool isSelected;
   final Color color;
+  final Color unselectedColor;
 
-  MonthName({this.name, this.onTap, this.isSelected, this.color});
+  MonthName({this.name, this.onTap, this.isSelected, this.color, this.unselectedColor});
 
   @override
   Widget build(BuildContext context) {
@@ -318,8 +322,8 @@ class MonthName extends StatelessWidget {
       child: Text(
         this.name.toUpperCase(),
         style: TextStyle(
-          fontSize: 14,
-          color: color ?? Colors.black87,
+          fontSize: this.isSelected ? 18: 14,
+          color: this.isSelected ? (color ?? Colors.black87): (unselectedColor ?? Colors.black87),
           fontWeight: this.isSelected ? FontWeight.bold : FontWeight.w300,
         ),
       ),
