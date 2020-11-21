@@ -268,14 +268,10 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   }
 
   _goToActualDay(int index) {
-    
-    setState(() {
-      widget.onDateSelected(_days[index]);
+    _moveToDayIndex(index);
     _daySelectedIndex = index;
     _selectedDate = _days[index];
-    });
-    _moveToDayIndex(index);
-    
+    widget.onDateSelected(_selectedDate);
   }
 
   void _moveToDayIndex(int index) {
