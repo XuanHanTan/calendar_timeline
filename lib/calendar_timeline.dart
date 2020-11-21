@@ -4,20 +4,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-typedef OnDateSelected = void Function(DateTime);
-final ItemScrollController _controllerMonth = ItemScrollController();
-final ItemScrollController _controllerDay = ItemScrollController();
-double _scrollAlignment;
- void moveToDayIndex(int index) {
-    _controllerDay
-        .scrollTo(
-          index: index,
-          alignment: _scrollAlignment,
-          duration: Duration(milliseconds: 500),
-          curve: Curves.easeIn,
-        );
-       
-  }
+typedef OnDateSelected = Future<bool> Function(DateTime);
+
 class CalendarTimeline extends StatefulWidget {
   final DateTime initialDate;
   final DateTime firstDate;
@@ -32,7 +20,7 @@ class CalendarTimeline extends StatefulWidget {
   final Color dotsColor;
   final Color dayNameColor;
   final String locale;
- 
+
   CalendarTimeline({
     Key key,
     @required this.initialDate,
@@ -78,11 +66,12 @@ class CalendarTimeline extends StatefulWidget {
 }
 
 class _CalendarTimelineState extends State<CalendarTimeline> {
-  
+  final ItemScrollController _controllerMonth = ItemScrollController();
+  final ItemScrollController _controllerDay = ItemScrollController();
 
   int _monthSelectedIndex;
   int _daySelectedIndex;
-  
+  double _scrollAlignment;
 
   List<DateTime> _months = [];
   List<DateTime> _days = [];
@@ -106,7 +95,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
     super.didUpdateWidget(oldWidget);
     _initCalendar();
     _moveToMonthIndex(_monthSelectedIndex);
-    moveToDayIndex(_daySelectedIndex);
+    _moveToDayIndex(_daySelectedIndex);
   }
 
   @override
@@ -278,14 +267,23 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
     );
   }
 
-  _goToActualDay(int index) {
-    moveToDayIndex(index);
+  _goToActualDay(int index) async {
     _daySelectedIndex = index;
     _selectedDate = _days[index];
-    widget.onDateSelected(_selectedDate);
+    setState(() {});
+    if (await widget.onDateSelected(_selectedDate)) {
+      _moveToDayIndex(index);
+    }
   }
 
-  
+  void _moveToDayIndex(int index) {
+    _controllerDay.scrollTo(
+      index: index,
+      alignment: _scrollAlignment,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeIn,
+    );
+  }
 
   _initCalendar() {
     _selectedDate = widget.initialDate;
