@@ -62,10 +62,10 @@ class CalendarTimeline extends StatefulWidget {
         super(key: key);
 
   @override
-  _CalendarTimelineState createState() => _CalendarTimelineState();
+  CalendarTimelineState createState() => CalendarTimelineState();
 }
 
-class _CalendarTimelineState extends State<CalendarTimeline> {
+class CalendarTimelineState extends State<CalendarTimeline> {
   final ItemScrollController _controllerMonth = ItemScrollController();
   final ItemScrollController _controllerDay = ItemScrollController();
 
@@ -90,13 +90,13 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
     });
   }
 
-  @override
+  /*@override
   void didUpdateWidget(CalendarTimeline oldWidget) {
     super.didUpdateWidget(oldWidget);
     _initCalendar();
     _moveToMonthIndex(_monthSelectedIndex);
     _moveToDayIndex(_daySelectedIndex);
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
