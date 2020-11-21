@@ -76,7 +76,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   List<DateTime> _months = [];
   List<DateTime> _days = [];
   DateTime _selectedDate;
-
+  bool _isSelectDate = false;
   String get _locale =>
       widget.locale ?? Localizations.localeOf(context).languageCode;
 
@@ -90,13 +90,19 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     });
   }
 
-  /*@override
+  @override
   void didUpdateWidget(CalendarTimeline oldWidget) {
-    super.didUpdateWidget(oldWidget);
+    if (_isSelectDate){
+      setState(() {
+        _isSelectDate = false;
+      });
+    }else {
+      super.didUpdateWidget(oldWidget);
     _initCalendar();
     _moveToMonthIndex(_monthSelectedIndex);
     _moveToDayIndex(_daySelectedIndex);
-  }*/
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -271,6 +277,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     _moveToDayIndex(index);
     _daySelectedIndex = index;
     _selectedDate = _days[index];
+    _isSelectDate = true;
     widget.onDateSelected(_selectedDate);
     setState(() {});
   }
