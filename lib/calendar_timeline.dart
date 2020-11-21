@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 typedef OnDateSelected = Function(DateTime);
-
+DateTime _selectedDate;
 class CalendarTimeline extends StatefulWidget {
   final DateTime initialDate;
   final DateTime firstDate;
@@ -20,6 +20,10 @@ class CalendarTimeline extends StatefulWidget {
   final Color dotsColor;
   final Color dayNameColor;
   final String locale;
+  
+  getCurrentSelectedDate(){
+    return _selectedDate;
+  }
 
   CalendarTimeline({
     Key key,
@@ -75,7 +79,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
 
   List<DateTime> _months = [];
   List<DateTime> _days = [];
-  DateTime _selectedDate;
+  
 
   String get _locale =>
       widget.locale ?? Localizations.localeOf(context).languageCode;
@@ -271,6 +275,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
     _moveToDayIndex(index);
     _daySelectedIndex = index;
     _selectedDate = _days[index];
+    widget.onDateSelected(_selectedDate);
     setState(() {});
   }
 
@@ -280,9 +285,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
       alignment: _scrollAlignment,
       duration: Duration(milliseconds: 500),
       curve: Curves.easeIn,
-    ).whenComplete(() {
-      widget.onDateSelected(_selectedDate);
-    });
+    );
   }
 
   _initCalendar() {
