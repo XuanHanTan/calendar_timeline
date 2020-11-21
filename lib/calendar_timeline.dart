@@ -268,22 +268,22 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   }
 
   _goToActualDay(int index) {
-    setState(() {
-      _daySelectedIndex = index;
-      _selectedDate = _days[index];
-
-      widget.onDateSelected(_selectedDate);
-    });
     _moveToDayIndex(index);
+    _daySelectedIndex = index;
+    _selectedDate = _days[index];
+
+    setState(() {});
   }
 
   void _moveToDayIndex(int index) {
-    _controllerDay.scrollTo(
-      index: index,
-      alignment: _scrollAlignment,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+    _controllerDay
+        .scrollTo(
+          index: index,
+          alignment: _scrollAlignment,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeIn,
+        )
+        .then((value) => widget.onDateSelected(_selectedDate));
   }
 
   _initCalendar() {
