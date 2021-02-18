@@ -9,7 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  scrollable_positioned_list: ^0.1.7
+  scrollable_positioned_list:
+    git:
+      url: https://github.com/XuanHanTan/flutter.widgets.git
+      path: packages/scrollable_positioned_list
+      ref: c2efed78fdbf420cfeb8b1146b070d7a2c089615
   intl: ^0.16.1
 
 dev_dependencies:
