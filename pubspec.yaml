@@ -13,7 +13,7 @@ dependencies:
     git:
       url: https://github.com/XuanHanTan/flutter.widgets.git
       path: packages/scrollable_positioned_list
-      ref: 796e0d22104e6f09940fc4442ed7fac80c494a36
+      ref: 9cd85ec1e62232b2adcc506d3b9e4dd6b6c1d8a6
   intl: ^0.16.1
 
 dev_dependencies:

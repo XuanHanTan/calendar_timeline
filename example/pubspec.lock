@@ -103,10 +103,12 @@ packages:
   scrollable_positioned_list:
     dependency: transitive
     description:
-      name: scrollable_positioned_list
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.7"
+      path: "packages/scrollable_positioned_list"
+      ref: "9cd85ec1e62232b2adcc506d3b9e4dd6b6c1d8a6"
+      resolved-ref: "9cd85ec1e62232b2adcc506d3b9e4dd6b6c1d8a6"
+      url: "https://github.com/XuanHanTan/flutter.widgets.git"
+    source: git
+    version: "0.1.9"
   sky_engine:
     dependency: transitive
     description: flutter
