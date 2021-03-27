@@ -92,8 +92,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/scrollable_positioned_list"
-      ref: "9cd85ec1e62232b2adcc506d3b9e4dd6b6c1d8a6"
-      resolved-ref: "9cd85ec1e62232b2adcc506d3b9e4dd6b6c1d8a6"
+      ref: "1a528b8ef9a44e718089bb5d167ef77312fa20e5"
+      resolved-ref: "1a528b8ef9a44e718089bb5d167ef77312fa20e5"
       url: "https://github.com/XuanHanTan/flutter.widgets.git"
     source: git
     version: "0.1.9"
@@ -108,7 +108,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   stack_trace:
     dependency: transitive
     description:
