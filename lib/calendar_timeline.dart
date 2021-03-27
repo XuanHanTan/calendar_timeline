@@ -94,15 +94,15 @@ class CalendarTimelineState extends State<CalendarTimeline> {
 
   @override
   void didUpdateWidget(CalendarTimeline oldWidget) {
-    if (_isSelectDate){
+    if (_isSelectDate) {
       setState(() {
         _isSelectDate = false;
       });
-    }else {
+    } else {
       super.didUpdateWidget(oldWidget);
-    _initCalendar();
-    _moveToMonthIndex(_monthSelectedIndex);
-    _moveToDayIndex(_daySelectedIndex);
+      _initCalendar();
+      _moveToMonthIndex(_monthSelectedIndex);
+      _moveToDayIndex(_daySelectedIndex);
     }
   }
 
@@ -268,12 +268,16 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   }
 
   void _moveToMonthIndex(int index) {
-    _controllerMonth.scrollTo(
-      index: index,
-      alignment: _scrollAlignment,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(Duration(milliseconds: 50), () {
+        _controllerMonth.scrollTo(
+          index: index,
+          alignment: _scrollAlignment,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeIn,
+        );
+      });
+    });
   }
 
   _goToActualDay(int index) async {
@@ -286,12 +290,16 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   }
 
   void _moveToDayIndex(int index) {
-    _controllerDay.scrollTo(
-      index: index,
-      alignment: _scrollAlignment,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(Duration(milliseconds: 50), () {
+        _controllerDay.scrollTo(
+          index: index,
+          alignment: _scrollAlignment,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeIn,
+        );
+      });
+    });
   }
 
   _initCalendar() {
@@ -313,7 +321,12 @@ class MonthName extends StatelessWidget {
   final Color color;
   final Color unselectedColor;
 
-  MonthName({this.name, this.onTap, this.isSelected, this.color, this.unselectedColor});
+  MonthName(
+      {this.name,
+      this.onTap,
+      this.isSelected,
+      this.color,
+      this.unselectedColor});
 
   @override
   Widget build(BuildContext context) {
@@ -322,8 +335,10 @@ class MonthName extends StatelessWidget {
       child: Text(
         this.name.toUpperCase(),
         style: TextStyle(
-          fontSize: this.isSelected ? 18: 14,
-          color: this.isSelected ? (color ?? Colors.black87): (unselectedColor ?? Colors.black87),
+          fontSize: this.isSelected ? 18 : 14,
+          color: this.isSelected
+              ? (color ?? Colors.black87)
+              : (unselectedColor ?? Colors.black87),
           fontWeight: this.isSelected ? FontWeight.bold : FontWeight.w300,
         ),
       ),
