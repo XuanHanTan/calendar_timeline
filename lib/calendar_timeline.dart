@@ -102,7 +102,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       });
     } else {
       super.didUpdateWidget(oldWidget);
-      //_initCalendar();
+      _initCalendar();
       _moveToMonthIndex(_monthSelectedIndex);
       _moveToDayIndex(_daySelectedIndex);
     }
@@ -271,14 +271,14 @@ class CalendarTimelineState extends State<CalendarTimeline> {
 
   void _moveToMonthIndex(int index) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Future.delayed(Duration(milliseconds: 50), () {
+     
         _controllerMonth.scrollTo(
           index: index,
           alignment: _scrollAlignment,
           duration: Duration(milliseconds: 500),
           curve: Curves.easeIn,
         );
-      });
+    
     });
   }
 
@@ -293,14 +293,13 @@ class CalendarTimelineState extends State<CalendarTimeline> {
 
   void _moveToDayIndex(int index) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Future.delayed(Duration(milliseconds: 50), () {
+     
         _controllerDay.scrollTo(
           index: index,
           alignment: _scrollAlignment,
           duration: Duration(milliseconds: 500),
           curve: Curves.easeIn,
         );
-      });
     });
   }
 
