@@ -70,7 +70,7 @@ class CalendarTimeline extends StatefulWidget {
 class CalendarTimelineState extends State<CalendarTimeline> {
   final ItemScrollController _controllerMonth = ItemScrollController();
   final ItemScrollController _controllerDay = ItemScrollController();
-
+  
   int _monthSelectedIndex;
   int _daySelectedIndex;
   double _scrollAlignment;
@@ -101,9 +101,9 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       });
     } else {
       super.didUpdateWidget(oldWidget);
-      //_initCalendar();
-      _jumpToMonthIndex(_monthSelectedIndex);
-      _jumpToDayIndex(_daySelectedIndex);
+      _initCalendar();
+      _moveToMonthIndex(_monthSelectedIndex);
+      _moveToDayIndex(_daySelectedIndex);
     }
   }
 
@@ -269,23 +269,12 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   }
 
   void _moveToMonthIndex(int index) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _controllerMonth.scrollTo(
-        index: index,
-        alignment: _scrollAlignment,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeIn,
-      );
-    });
-  }
-
-  void _jumpToMonthIndex(int index) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _controllerMonth.jumpTo(
-        index: index,
-        //alignment: _scrollAlignment,
-      );
-    });
+    _controllerMonth.scrollTo(
+      index: index,
+      alignment: _scrollAlignment,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeIn,
+    );
   }
 
   _goToActualDay(int index) async {
@@ -298,23 +287,12 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   }
 
   void _moveToDayIndex(int index) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _controllerDay.scrollTo(
-        index: index,
-        alignment: _scrollAlignment,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeIn,
-      );
-    });
-  }
-
-  void _jumpToDayIndex(int index) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _controllerDay.jumpTo(
-        index: index,
-        //alignment: _scrollAlignment,
-      );
-    });
+    _controllerDay.scrollTo(
+      index: index,
+      alignment: _scrollAlignment,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeIn,
+    );
   }
 
   _initCalendar() {
