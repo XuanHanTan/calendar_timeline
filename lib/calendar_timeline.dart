@@ -90,6 +90,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       initializeDateFormatting(_locale);
     });
+    _moveToMonthIndex(_monthSelectedIndex);
   }
 
   @override
@@ -101,7 +102,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     } else {
       super.didUpdateWidget(oldWidget);
       _initCalendar();
-      _moveToMonthIndex(_monthSelectedIndex);
+      //_moveToMonthIndex(_monthSelectedIndex);
       _moveToDayIndex(_daySelectedIndex);
     }
   }
