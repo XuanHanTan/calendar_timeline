@@ -103,7 +103,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     } else {
       super.didUpdateWidget(oldWidget);
       _initCalendar();
-      if (oldWidget.initialDate != widget.initialDate &&
+      if (oldWidget.initialDate != widget.initialDate ||
           (_itemPositionsListener.itemPositions.value
                   .where(
                       (ItemPosition position) => position.itemLeadingEdge < 1)
