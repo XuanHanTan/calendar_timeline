@@ -102,7 +102,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       });
     } else {
       super.didUpdateWidget(oldWidget);
-      _initCalendar();
+      //_initCalendar();
       _moveToMonthIndex(_monthSelectedIndex);
       _moveToDayIndex(_daySelectedIndex);
     }
