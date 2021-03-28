@@ -92,8 +92,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/scrollable_positioned_list"
-      ref: "9cd85ec1e62232b2adcc506d3b9e4dd6b6c1d8a6"
-      resolved-ref: "9cd85ec1e62232b2adcc506d3b9e4dd6b6c1d8a6"
+      ref: "924852d173d17efdd990bec7b47c4ec0f7d9b4fb"
+      resolved-ref: "924852d173d17efdd990bec7b47c4ec0f7d9b4fb"
       url: "https://github.com/XuanHanTan/flutter.widgets.git"
     source: git
     version: "0.1.9"
