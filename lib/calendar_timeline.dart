@@ -70,7 +70,7 @@ class CalendarTimeline extends StatefulWidget {
 class CalendarTimelineState extends State<CalendarTimeline> {
   final ItemScrollController _controllerMonth = ItemScrollController();
   final ItemScrollController _controllerDay = ItemScrollController();
-
+  
   int _monthSelectedIndex;
   int _daySelectedIndex;
   double _scrollAlignment;
@@ -89,8 +89,9 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     _scrollAlignment = widget.leftMargin / 440;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       initializeDateFormatting(_locale);
+      _moveToMonthIndex(_monthSelectedIndex);
     });
-    _moveToMonthIndex(_monthSelectedIndex);
+    
   }
 
   @override
@@ -102,7 +103,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     } else {
       super.didUpdateWidget(oldWidget);
       _initCalendar();
-      //_moveToMonthIndex(_monthSelectedIndex);
+      _moveToMonthIndex(_monthSelectedIndex);
       _moveToDayIndex(_daySelectedIndex);
     }
   }
