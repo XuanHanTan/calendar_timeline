@@ -6,6 +6,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 typedef OnDateSelected = Function(DateTime);
 int previousIndex;
+
 class CalendarTimeline extends StatefulWidget {
   final DateTime initialDate;
   final DateTime firstDate;
@@ -70,7 +71,7 @@ class CalendarTimeline extends StatefulWidget {
 class CalendarTimelineState extends State<CalendarTimeline> {
   final ItemScrollController _controllerMonth = ItemScrollController();
   final ItemScrollController _controllerDay = ItemScrollController();
-  
+  ItemPositionsListener _itemPositionsListener = ItemPositionsListener.create();
   int _monthSelectedIndex;
   int _daySelectedIndex;
   double _scrollAlignment;
@@ -102,7 +103,16 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     } else {
       super.didUpdateWidget(oldWidget);
       _initCalendar();
-      if (previousIndex != _monthSelectedIndex){
+      if (oldWidget.initialDate != widget.initialDate &&
+          (_itemPositionsListener.itemPositions.value
+                  .where(
+                      (ItemPosition position) => position.itemLeadingEdge < 1)
+                  .reduce((ItemPosition max, ItemPosition position) =>
+                      position.itemLeadingEdge > max.itemLeadingEdge
+                          ? position
+                          : max)
+                  .index !=
+              _monthSelectedIndex)) {
         _moveToMonthIndex(_monthSelectedIndex);
       }
       _moveToDayIndex(_daySelectedIndex);
@@ -169,6 +179,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     return Container(
       height: 40,
       child: ScrollablePositionedList.builder(
+        itemPositionsListener: _itemPositionsListener,
         initialScrollIndex: _monthSelectedIndex,
         initialAlignment: _scrollAlignment,
         itemScrollController: _controllerMonth,
