@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 typedef OnDateSelected = Function(DateTime);
-
+int previousIndex;
 class CalendarTimeline extends StatefulWidget {
   final DateTime initialDate;
   final DateTime firstDate;
@@ -102,7 +102,9 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     } else {
       super.didUpdateWidget(oldWidget);
       _initCalendar();
-      _moveToMonthIndex(_monthSelectedIndex);
+      if (previousIndex != _monthSelectedIndex){
+        _moveToMonthIndex(_monthSelectedIndex);
+      }
       _moveToDayIndex(_daySelectedIndex);
     }
   }
@@ -299,6 +301,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     _selectedDate = widget.initialDate;
     _generateMonths();
     _generateDays(_selectedDate);
+    previousIndex = _monthSelectedIndex;
     _monthSelectedIndex = _months.indexOf(_months.firstWhere((monthDate) =>
         monthDate.year == widget.initialDate.year &&
         monthDate.month == widget.initialDate.month));
