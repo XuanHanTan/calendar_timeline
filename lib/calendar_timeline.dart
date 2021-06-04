@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -24,7 +22,6 @@ class CalendarTimeline extends StatefulWidget {
   final Color dayNameColor;
   final String locale;
   final Color monthUnselectedColor;
-  final StreamController subscription;
 
   CalendarTimeline({
     Key key,
@@ -42,7 +39,6 @@ class CalendarTimeline extends StatefulWidget {
     this.dayNameColor,
     this.locale,
     this.monthUnselectedColor,
-    this.subscription,
   })  : assert(initialDate != null),
         assert(firstDate != null),
         assert(lastDate != null),
@@ -78,7 +74,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   int _monthSelectedIndex;
   int _daySelectedIndex;
   double _scrollAlignment;
-
+  DateTime _prevInitialDate;
   List<DateTime> _months = [];
   List<DateTime> _days = [];
   DateTime _selectedDate;
@@ -89,25 +85,15 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   @override
   void initState() {
     super.initState();
-    _initCalendar();
-    widget.subscription.stream.listen((event) {
-      if (event["exec"] == "moveToMonthIndex") {
-        _goToActualMonth(getMonthIndex(event["date"]));
-      } else if (event["exec"] == "moveToDayIndex") {
-        _goToActualDay(getDayIndex(event["date"]));
-      }
+    setState(() {
+      _prevInitialDate = widget.initialDate;
     });
+    _initCalendar();
     _scrollAlignment = widget.leftMargin / 440;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       initializeDateFormatting(_locale);
       _moveToMonthIndex(_monthSelectedIndex);
     });
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    widget.subscription.close();
   }
 
   @override
@@ -118,10 +104,15 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       });
     } else {
       super.didUpdateWidget(oldWidget);
-      _initCalendar();
 
-      //_jumpToMonthIndex(_monthSelectedIndex);
-      //_jumpToDayIndex(_daySelectedIndex);
+      _initCalendar();
+      if (_prevInitialDate != widget.initialDate) {
+        setState(() {
+          _prevInitialDate = widget.initialDate;
+        });
+        _jumpToMonthIndex(_monthSelectedIndex);
+        _jumpToDayIndex(_daySelectedIndex);
+      }
     }
   }
 
