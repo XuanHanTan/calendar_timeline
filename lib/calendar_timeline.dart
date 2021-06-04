@@ -99,6 +99,9 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   @override
   void didUpdateWidget(CalendarTimeline oldWidget) {
     if (_isSelectDate) {
+      if (_prevInitialDate != widget.initialDate) {
+          _prevInitialDate = widget.initialDate;
+      }
       setState(() {
         _isSelectDate = false;
       });
