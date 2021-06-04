@@ -106,6 +106,8 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       super.didUpdateWidget(oldWidget);
 
       _initCalendar();
+      print(_prevInitialDate);
+      print(widget.initialDate);
       if (_prevInitialDate != widget.initialDate) {
           _prevInitialDate = widget.initialDate;
         _moveToMonthIndex(_monthSelectedIndex);
