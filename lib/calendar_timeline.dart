@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -22,6 +24,7 @@ class CalendarTimeline extends StatefulWidget {
   final Color dayNameColor;
   final String locale;
   final Color monthUnselectedColor;
+  final StreamController subscription;
 
   CalendarTimeline({
     Key key,
@@ -39,6 +42,7 @@ class CalendarTimeline extends StatefulWidget {
     this.dayNameColor,
     this.locale,
     this.monthUnselectedColor,
+    this.subscription,
   })  : assert(initialDate != null),
         assert(firstDate != null),
         assert(lastDate != null),
@@ -86,11 +90,24 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   void initState() {
     super.initState();
     _initCalendar();
+    widget.subscription.stream.listen((event) {
+      if (event["exec"] == "moveToMonthIndex") {
+        _goToActualMonth(getMonthIndex(event["date"]));
+      } else if (event["exec"] == "moveToDayIndex") {
+        _goToActualDay(getDayIndex(event["date"]));
+      }
+    });
     _scrollAlignment = widget.leftMargin / 440;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       initializeDateFormatting(_locale);
       _moveToMonthIndex(_monthSelectedIndex);
     });
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    widget.subscription.close();
   }
 
   @override
@@ -103,8 +120,8 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       super.didUpdateWidget(oldWidget);
       _initCalendar();
 
-      _jumpToMonthIndex(_monthSelectedIndex);
-      _jumpToDayIndex(_daySelectedIndex);
+      //_jumpToMonthIndex(_monthSelectedIndex);
+      //_jumpToDayIndex(_daySelectedIndex);
     }
   }
 
@@ -142,7 +159,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
                 shortName: shortName.length > 3
                     ? shortName.substring(0, 3)
                     : shortName,
-                onTap: () => goToActualDay(index),
+                onTap: () => _goToActualDay(index),
                 available: widget.selectableDayPredicate == null
                     ? true
                     : widget.selectableDayPredicate(currentDay),
@@ -210,7 +227,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
                 MonthName(
                   isSelected: _monthSelectedIndex == index,
                   name: monthName,
-                  onTap: () => goToActualMonth(index),
+                  onTap: () => _goToActualMonth(index),
                   color: widget.monthColor,
                   unselectedColor: widget.monthUnselectedColor,
                 ),
@@ -262,7 +279,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     );
   }
 
-  goToActualMonth(int index) {
+  _goToActualMonth(int index) {
     _moveToMonthIndex(index);
     _monthSelectedIndex = index;
     _resetCalendar(_months[index]);
@@ -294,7 +311,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     );
   }
 
-  goToActualDay(int index) async {
+  _goToActualDay(int index) async {
     _moveToDayIndex(index);
     _daySelectedIndex = index;
     _selectedDate = _days[index];
