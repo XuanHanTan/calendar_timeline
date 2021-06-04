@@ -110,8 +110,8 @@ class CalendarTimelineState extends State<CalendarTimeline> {
         setState(() {
           _prevInitialDate = widget.initialDate;
         });
-        _jumpToMonthIndex(_monthSelectedIndex);
-        _jumpToDayIndex(_daySelectedIndex);
+        _moveToMonthIndex(_monthSelectedIndex);
+        _moveToDayIndex(_daySelectedIndex);
       }
     }
   }
