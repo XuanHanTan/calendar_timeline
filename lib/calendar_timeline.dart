@@ -269,6 +269,16 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     setState(() {});
   }
 
+  getMonthIndex(DateTime date) {
+    return _months.indexOf(_months.firstWhere((monthDate) =>
+        monthDate.year == date.year && monthDate.month == date.month));
+  }
+
+  getDayIndex(DateTime date) {
+    return _days
+        .indexOf(_days.firstWhere((dayDate) => dayDate.day == date.day));
+  }
+
   void _moveToMonthIndex(int index) {
     _controllerMonth.scrollTo(
       index: index,
@@ -277,6 +287,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       curve: Curves.easeIn,
     );
   }
+
   void _jumpToMonthIndex(int index) {
     _controllerMonth.jumpTo(
       index: index,
@@ -306,7 +317,6 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       index: index,
     );
   }
-
 
   _initCalendar() {
     _selectedDate = widget.initialDate;
