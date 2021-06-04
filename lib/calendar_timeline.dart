@@ -85,9 +85,9 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   @override
   void initState() {
     super.initState();
-    setState(() {
+
       _prevInitialDate = widget.initialDate;
-    });
+
     _initCalendar();
     _scrollAlignment = widget.leftMargin / 440;
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -107,9 +107,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
 
       _initCalendar();
       if (_prevInitialDate != widget.initialDate) {
-        setState(() {
           _prevInitialDate = widget.initialDate;
-        });
         _moveToMonthIndex(_monthSelectedIndex);
         _moveToDayIndex(_daySelectedIndex);
       }
