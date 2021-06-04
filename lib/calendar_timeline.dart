@@ -142,7 +142,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
                 shortName: shortName.length > 3
                     ? shortName.substring(0, 3)
                     : shortName,
-                onTap: () => _goToActualDay(index),
+                onTap: () => goToActualDay(index),
                 available: widget.selectableDayPredicate == null
                     ? true
                     : widget.selectableDayPredicate(currentDay),
@@ -210,7 +210,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
                 MonthName(
                   isSelected: _monthSelectedIndex == index,
                   name: monthName,
-                  onTap: () => _goToActualMonth(index),
+                  onTap: () => goToActualMonth(index),
                   color: widget.monthColor,
                   unselectedColor: widget.monthUnselectedColor,
                 ),
@@ -262,7 +262,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     );
   }
 
-  _goToActualMonth(int index) {
+  goToActualMonth(int index) {
     _moveToMonthIndex(index);
     _monthSelectedIndex = index;
     _resetCalendar(_months[index]);
@@ -283,7 +283,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     );
   }
 
-  _goToActualDay(int index) async {
+  goToActualDay(int index) async {
     _moveToDayIndex(index);
     _daySelectedIndex = index;
     _selectedDate = _days[index];
