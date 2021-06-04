@@ -22,6 +22,7 @@ class CalendarTimeline extends StatefulWidget {
   final Color dayNameColor;
   final String locale;
   final Color monthUnselectedColor;
+  final double width;
 
   CalendarTimeline({
     Key key,
@@ -39,6 +40,7 @@ class CalendarTimeline extends StatefulWidget {
     this.dayNameColor,
     this.locale,
     this.monthUnselectedColor,
+    this.width,
   })  : assert(initialDate != null),
         assert(firstDate != null),
         assert(lastDate != null),
@@ -86,7 +88,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   void initState() {
     super.initState();
 
-      _prevInitialDate = widget.initialDate;
+    _prevInitialDate = widget.initialDate;
 
     _initCalendar();
     _scrollAlignment = widget.leftMargin / 440;
@@ -100,7 +102,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
   void didUpdateWidget(CalendarTimeline oldWidget) {
     if (_isSelectDate) {
       if (_prevInitialDate != widget.initialDate) {
-          _prevInitialDate = widget.initialDate;
+        _prevInitialDate = widget.initialDate;
       }
       setState(() {
         _isSelectDate = false;
@@ -109,12 +111,10 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       super.didUpdateWidget(oldWidget);
 
       _initCalendar();
-      print(_prevInitialDate);
-      print(widget.initialDate);
       if (_prevInitialDate != widget.initialDate) {
-          _prevInitialDate = widget.initialDate;
-        _moveToMonthIndex(_monthSelectedIndex);
-        _moveToDayIndex(_daySelectedIndex);
+        _prevInitialDate = widget.initialDate;
+        _jumpToMonthIndex(_monthSelectedIndex);
+        _jumpToDayIndex(_daySelectedIndex);
       }
     }
   }
@@ -165,7 +165,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
               ),
               if (index == _days.length - 1)
                 SizedBox(
-                    width: MediaQuery.of(context).size.width -
+                    width: widget.width -
                         widget.leftMargin -
                         65)
             ],
@@ -227,7 +227,7 @@ class CalendarTimelineState extends State<CalendarTimeline> {
                 ),
                 if (index == _months.length - 1)
                   SizedBox(
-                    width: MediaQuery.of(context).size.width -
+                    width: widget.width -
                         widget.leftMargin -
                         (monthName.length * 10),
                   )
@@ -278,16 +278,6 @@ class CalendarTimelineState extends State<CalendarTimeline> {
     _monthSelectedIndex = index;
     _resetCalendar(_months[index]);
     setState(() {});
-  }
-
-  getMonthIndex(DateTime date) {
-    return _months.indexOf(_months.firstWhere((monthDate) =>
-        monthDate.year == date.year && monthDate.month == date.month));
-  }
-
-  getDayIndex(DateTime date) {
-    return _days
-        .indexOf(_days.firstWhere((dayDate) => dayDate.day == date.day));
   }
 
   void _moveToMonthIndex(int index) {
