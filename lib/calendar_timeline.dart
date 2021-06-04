@@ -103,8 +103,8 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       super.didUpdateWidget(oldWidget);
       _initCalendar();
 
-      //_moveToMonthIndex(_monthSelectedIndex);
-      //_moveToDayIndex(_daySelectedIndex);
+      _jumpToMonthIndex(_monthSelectedIndex);
+      _jumpToDayIndex(_daySelectedIndex);
     }
   }
 
@@ -277,6 +277,11 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       curve: Curves.easeIn,
     );
   }
+  void _jumpToMonthIndex(int index) {
+    _controllerMonth.jumpTo(
+      index: index,
+    );
+  }
 
   _goToActualDay(int index) async {
     _moveToDayIndex(index);
@@ -295,6 +300,13 @@ class CalendarTimelineState extends State<CalendarTimeline> {
       curve: Curves.easeIn,
     );
   }
+
+  void _jumpToDayIndex(int index) {
+    _controllerDay.jumpTo(
+      index: index,
+    );
+  }
+
 
   _initCalendar() {
     _selectedDate = widget.initialDate;
